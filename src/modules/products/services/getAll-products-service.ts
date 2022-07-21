@@ -1,7 +1,7 @@
 import { RedisCache } from '@shared/cache/redis-cache'
 import { getCustomRepository } from 'typeorm'
-import { Product } from '../typeorm/entities'
-import { ProductRepository } from '../typeorm/repositories/products-repository'
+import { Product } from '../infra/typeorm/entities'
+import { ProductRepository } from '../infra/typeorm/repositories/products-repository'
 
 export class GetAllProductsService {
   private productRepository = getCustomRepository(ProductRepository)

@@ -2,7 +2,7 @@ import { EtherealMail } from '@config/mail'
 import { AppError } from '@shared/errors/AppError'
 import path from 'path'
 import { getCustomRepository } from 'typeorm'
-import { UsersRepository, UserTokensRepository } from '../typeorm/repositories/'
+import { UsersRepository, UserTokensRepository } from '../infra/typeorm/repositories'
 
 interface IRequest {
   email: string
