@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { container } from 'tsyringe'
 import { CreateCustomerService, DeleteCustomerService, GetAllCustomersService, GetCustomerService, UpdateCustomerService } from '../../../services'
 
 export class CustomersController {
@@ -20,9 +21,9 @@ export class CustomersController {
   }
 
   async create (request: Request, response: Response): Promise<Response> {
-    const createCustomer = new CreateCustomerService()
-
     const { name, email } = request.body
+
+    const createCustomer = container.resolve(CreateCustomerService)
 
     const customer = await createCustomer.execute({ name, email })
 

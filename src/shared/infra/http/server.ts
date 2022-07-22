@@ -1,3 +1,5 @@
+import '@shared/container'
+import '@shared/infra/typeorm'
 import 'dotenv/config'
 import 'express-async-errors'
 import 'reflect-metadata'
@@ -6,7 +8,6 @@ import express, { NextFunction, Request, Response } from 'express'
 
 import uploadConfig from '@config/upload'
 import { AppError } from '@shared/errors/AppError'
-import '@shared/infra/typeorm'
 import { errors } from 'celebrate'
 import cors from 'cors'
 import { rateLimiter } from './middlewares/rate-limiter'
