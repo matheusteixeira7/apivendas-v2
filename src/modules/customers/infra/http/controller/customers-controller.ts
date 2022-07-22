@@ -1,19 +1,19 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { CreateCustomerService, DeleteCustomerService, GetAllCustomersService, GetCustomerService, UpdateCustomerService } from '../../../services'
+import { CreateCustomerService, DeleteCustomerService, GetCustomerService, ListCustomersService, UpdateCustomerService } from '../../../services'
 
 export class CustomersController {
   async getAll (request: Request, response: Response): Promise<Response> {
-    const getAllCustomers = new GetAllCustomersService()
-    const customers = await getAllCustomers.execute()
+    const listCustomers = container.resolve(ListCustomersService)
+    const customers = await listCustomers.execute()
 
     return response.status(200).json(customers)
   }
 
   async getById (request: Request, response: Response): Promise<Response> {
-    const getCustomerById = new GetCustomerService()
-
     const { id } = request.params
+
+    const getCustomerById = container.resolve(GetCustomerService)
 
     const customer = await getCustomerById.execute({ id })
 
@@ -31,10 +31,10 @@ export class CustomersController {
   }
 
   async update (request: Request, response: Response): Promise<Response> {
-    const updateCustomer = new UpdateCustomerService()
-
     const { id } = request.params
     const { name, email } = request.body
+
+    const updateCustomer = container.resolve(UpdateCustomerService)
 
     const customer = await updateCustomer.execute({ id, name, email })
 
@@ -42,9 +42,9 @@ export class CustomersController {
   }
 
   async delete (request: Request, response: Response): Promise<Response> {
-    const deleteCustomer = new DeleteCustomerService()
-
     const { id } = request.params
+
+    const deleteCustomer = container.resolve(DeleteCustomerService)
 
     await deleteCustomer.execute({ id })
 

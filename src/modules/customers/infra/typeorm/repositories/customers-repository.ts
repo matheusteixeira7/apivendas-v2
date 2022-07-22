@@ -1,3 +1,4 @@
+import { ICustomer } from '@modules/customers/domain/models/ICustomer'
 import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository'
 import { getRepository, Repository } from 'typeorm'
 import { Customer } from '../entities/customer'
@@ -21,9 +22,19 @@ export class CustomersRepository implements ICustomersRepository {
     return customer
   }
 
-  async save (customer: Customer): Promise<Customer> {
+  async remove (customer: ICustomer): Promise<void> {
+    await this.ormRepository.remove(customer)
+  }
+
+  async save (customer: ICustomer): Promise<Customer> {
     await this.ormRepository.save(customer)
     return customer
+  }
+
+  async list (): Promise<ICustomer[]> {
+    const customers = await this.ormRepository.find()
+
+    return customers
   }
 
   async findByName (name: string): Promise<Customer | undefined> {
