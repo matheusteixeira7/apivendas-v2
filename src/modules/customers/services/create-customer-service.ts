@@ -2,7 +2,7 @@ import { ICustomersRepository } from '@modules/customers/domain/repositories/ICu
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
 import { ICustomer } from '../domain/models/ICustomer'
-import { ICreateCustomer } from './../domain/models/ICreateCustomer'
+import { ICreateCustomerDTO } from '../infra/http/dtos/create-customer-dto'
 
 @injectable()
 export class CreateCustomerService {
@@ -11,7 +11,7 @@ export class CreateCustomerService {
     private customersRepository: ICustomersRepository
   ) {}
 
-  async execute ({ name, email }: ICreateCustomer): Promise<ICustomer> {
+  async execute ({ name, email }: ICreateCustomerDTO): Promise<ICustomer> {
     const emailExists = await this.customersRepository.findByEmail(email)
 
     if (emailExists) {
